@@ -30,8 +30,8 @@ function love.load()
 
     -- Init Players (Player dimension 30x150)
     -- Player coordinates refer to the topmost left part of player
-    phineas = Player(30, 0) -- leave 30px so as not to be on the extreme edge
-    ferb = Player(WINDOW_HEIGHT - 180, 0) -- (180 cause 150 + 30 cause initial state is not at the edge)
+    phineas = Player(10, 30, 0) -- leave 30px so as not to be on the extreme edge
+    ferb = Player(WINDOW_WIDTH-40, WINDOW_HEIGHT - 180, 0) -- (180 cause 150 + 30 cause initial state is not at the edge)
     -- Init Ball
     ball = Ball(WINDOW_WIDTH/2, WINDOW_HEIGHT/2, BALL_RADIUS)
     -- Game State
@@ -44,8 +44,8 @@ function love.draw()
     love.graphics.setFont(bg_font)
 
     -- Render Objects
-    phineas:render(10) 
-    ferb:render(WINDOW_WIDTH-40)
+    phineas:render() 
+    ferb:render()
     ball:render()
 
     love.graphics.setColor(0.4156,0.5215,0.1411, 0.75)
