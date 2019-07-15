@@ -24,6 +24,18 @@ function Ball:update(dt)
     self.y = self.y + self.dy * dt
 end
 
+function Ball:isCollision(player)
+    if self.x - self.radius > 30 then--or self.x + self.radius < WINDOW_WIDTH-30 then
+        return false
+    end
+
+    if player.position + 150 < self.y - self.radius or self.radius + self.y > player.position then
+        return false
+    end
+    -- if nothing happens then return true
+    return true
+end
+
 function Ball:render()
     love.graphics.circle("fill", self.x, self.y, self.radius)
 end
