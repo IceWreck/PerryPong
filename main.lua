@@ -10,7 +10,7 @@ GAME_NAME = "Perry Pong"
 FSIZE_XL = 200 -- for title
 FSIZE_SCORE = 100 -- for scorekeeping
 PLAYER_SPEED = 600
-BALL_RADIUS = 50
+BALL_RADIUS = 40
 
 function love.load()
     bg_font = love.graphics.newFont('fonts/ferbtastic.ttf', FSIZE_XL)

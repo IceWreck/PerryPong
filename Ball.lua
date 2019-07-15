@@ -26,10 +26,10 @@ end
 
 function Ball:isCollision(player)
     if self.x - self.radius > player.x + 30 or self.x + self.radius < player.x then
-        return false
+        return false 
     end
 
-    if player.y < (self.y - self.radius ) or (self.y + self.radius) < player.y then
+    if (self.y - self.radius ) >= player.y or player.y >= (self.y + self.radius) then
         return false
     end
     -- if nothing happens then return true
