@@ -14,6 +14,7 @@ PLAYER_SPEED = 600
 function love.load()
     bg_font = love.graphics.newFont('fonts/ferbtastic.ttf', FSIZE_XL)
     sc_font = love.graphics.newFont('fonts/ferbtastic.ttf', FSIZE_SCORE)
+    fps_font = love.graphics.newFont('fonts/ferbtastic.ttf', 20)
     bg_image = love.graphics.newImage("img/background.jpg")
     
     love.window.setMode( WINDOW_WIDTH, WINDOW_HEIGHT, {
@@ -21,6 +22,8 @@ function love.load()
         resizable = false,
         vsync = true
     } )
+
+    love.window.setTitle('Perry Pong')
 
     math.randomseed(os.time())
 
@@ -50,6 +53,7 @@ function love.draw()
     love.graphics.print(tostring(phineas.score), WINDOW_WIDTH / 2 - 200, WINDOW_HEIGHT/4)
     love.graphics.print(tostring(ferb.score), WINDOW_WIDTH / 2 + 200, WINDOW_HEIGHT/4)
 
+    showFPS()
     -- Render Objects
     phineas:render(10) 
     ferb:render(WINDOW_WIDTH-40)
@@ -91,4 +95,9 @@ function love.keypressed(key)
             ball:reset()
         end
     end
+end
+
+function showFPS()
+    love.graphics.setFont(fps_font)
+    love.graphics.print('FPS: ' .. tostring(love.timer.getFPS()), 50,50)
 end
