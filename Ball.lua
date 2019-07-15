@@ -1,9 +1,9 @@
 Ball = Class{}
 
-function Ball:init(x, y, radius)
+function Ball:init(x, y, side)
     self.x = x
     self.y = y
-    self.radius = radius
+    self.side = side
     self.dy = math.random(-50, 50) * 4
     self.dx = math.random(-100, 100) * 9
 end
@@ -14,8 +14,9 @@ function Ball:reset()
     self.y = WINDOW_HEIGHT/2
 
     -- set delta vals for next time
-    self.dx = math.random(-100, 100) * 9
     self.dy = math.random(-50, 50) * 4
+    self.dx = math.random(-100, 100) * 9
+    
 end
 
 function Ball:update(dt)
@@ -25,11 +26,11 @@ function Ball:update(dt)
 end
 
 function Ball:isCollision(player)
-    if self.x - self.radius > player.x + 30 or self.x + self.radius < player.x then
+    if self.x > player.x + 30 or self.x + self.side < player.x then
         return false 
     end
 
-    if (self.y - self.radius ) >= player.y or player.y >= (self.y + self.radius) then
+    if self.y >= player.y + 150 or player.y >= (self.y + self.side) then
         return false
     end
     -- if nothing happens then return true
@@ -37,5 +38,5 @@ function Ball:isCollision(player)
 end
 
 function Ball:render()
-    love.graphics.circle("fill", self.x, self.y, self.radius)
+    love.graphics.rectangle("fill", self.x, self.y, self.side, self.side)
 end
