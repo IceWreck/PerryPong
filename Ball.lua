@@ -4,8 +4,8 @@ function Ball:init(x, y, side)
     self.x = x
     self.y = y
     self.side = side
-    self.dy = math.random(-50, 50) * 4
-    self.dx = math.random(-100, 100) * 9
+    self.dy = math.random(-50, 50) * 4 -- vertical; for turns
+    self.dx = randomSpeed() -- special function because we don't want very slow speed
 end
 
 function Ball:reset()
@@ -39,4 +39,13 @@ end
 
 function Ball:render()
     love.graphics.rectangle("fill", self.x, self.y, self.side, self.side)
+end
+
+
+function randomSpeed()
+    if math.random(1,2) == 1 then
+        return math.random(60, 80) * 8
+    else 
+        return math.random(60, 80) * -8
+    end
 end

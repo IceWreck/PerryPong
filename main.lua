@@ -10,7 +10,7 @@ GAME_NAME = "Perry Pong"
 FSIZE_XL = 200 -- for title
 FSIZE_SCORE = 100 -- for scorekeeping
 PLAYER_SPEED = 600
-BALL_RADIUS = 40
+BALL_SIDE = 40
 
 function love.load()
     bg_font = love.graphics.newFont('fonts/ferbtastic.ttf', FSIZE_XL)
@@ -33,7 +33,7 @@ function love.load()
     phineas = Player(10, 30, 0) -- leave 30px so as not to be on the extreme edge
     ferb = Player(WINDOW_WIDTH-40, WINDOW_HEIGHT - 180, 0) -- (180 cause 150 + 30 cause initial state is not at the edge)
     -- Init Ball
-    ball = Ball(WINDOW_WIDTH/2, WINDOW_HEIGHT/2, BALL_RADIUS)
+    ball = Ball(WINDOW_WIDTH/2, WINDOW_HEIGHT/2, BALL_SIDE)
     -- Game State
     game_state = "STOP"
 end
@@ -76,12 +76,28 @@ end
 
 function love.update(dt)
     -- Ball 
-    if ball:isCollision(phineas) then
-        ball.dx = -ball.dx
+    -- Collision with players
+    if ball:isCollision(phineas) or ball:isCollision(ferb) then
+        -- rebound with extra speed
+        ball.dx = -ball.dx * 1.2
+        -- change its angle
+        if ball.dy < 0 then
+            ball.dy = -math.random(50, 150)
+        else
+            ball.dy = math.random(50, 150)
+        end
     end
-    if ball:isCollision(ferb) then
-        ball.dx = -ball.dx
+
+    -- Ensure it doesn't go offscreen
+    if ball.y <= 0 then
+        ball.y = 0
+        ball.dy = -ball.dy
     end
+    if ball.y >= WINDOW_HEIGHT - BALL_SIDE then
+        ball.y = WINDOW_HEIGHT - BALL_SIDE
+        ball.dy = -ball.dy
+    end
+
     -- Phineas
     if love.keyboard.isDown('w') then
         phineas:update(-dt)
