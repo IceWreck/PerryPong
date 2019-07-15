@@ -25,11 +25,11 @@ function Ball:update(dt)
 end
 
 function Ball:isCollision(player)
-    if self.x - self.radius >  30 then -- or self.x + self.radius < WINDOW_WIDTH-30 then
+    if self.x - self.radius > player.x + 30 or self.x + self.radius < player.x then
         return false
     end
 
-    if player.y + 150 < self.y - self.radius or self.radius + self.y > player.y then
+    if player.y < (self.y - self.radius ) or (self.y + self.radius) < player.y then
         return false
     end
     -- if nothing happens then return true
