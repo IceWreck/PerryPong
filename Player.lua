@@ -1,11 +1,12 @@
 Player = Class{}
 
-function Player:init(x, y, score, name)
+function Player:init(x, y, score, name, image)
     self.x = x
     self.y = y -- of topmost point
     self.score = score
     self.dy = 0
     self.name = name
+    self.image = image
 end
 
 function Player:update(dt)
@@ -19,5 +20,5 @@ end
 
 function Player:render()
     -- ( mode, x, y, width, height )
-    love.graphics.rectangle('fill', self.x, self.y, 30, 150)
+    love.graphics.draw(self.image, self.x, self.y)
 end

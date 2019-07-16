@@ -1,8 +1,9 @@
 Ball = Class{}
 
-function Ball:init(x, y, side)
+function Ball:init(image, x, y, side)
     self.x = x
     self.y = y
+    self.image = image
     self.side = side
     self.dy = math.random(-50, 50) * 4 -- vertical; for turns
     self.dx = randomSpeed() -- special function because we don't want very slow speed
@@ -38,7 +39,7 @@ function Ball:isCollision(player)
 end
 
 function Ball:render()
-    love.graphics.rectangle("fill", self.x, self.y, self.side, self.side)
+    love.graphics.draw(self.image, self.x, self.y)
 end
 
 

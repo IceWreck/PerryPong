@@ -11,13 +11,16 @@ GAME_NAME = "Perry Pong"
 FSIZE_XL = 200 -- for title
 FSIZE_SCORE = 100 -- for scorekeeping
 PLAYER_SPEED = 600
-BALL_SIDE = 40
+BALL_SIDE = 100
 
 function love.load()
     bg_font = love.graphics.newFont('fonts/ferbtastic.ttf', FSIZE_XL)
     sc_font = love.graphics.newFont('fonts/ferbtastic.ttf', FSIZE_SCORE)
     fps_font = love.graphics.newFont('fonts/ferbtastic.ttf', 20)
     bg_image = love.graphics.newImage("img/background.jpg")
+    perry_img = love.graphics.newImage("img/perry.png")
+    phineas_img = love.graphics.newImage("img/phineas.png")
+    ferb_img = love.graphics.newImage("img/ferb.png")
     
     love.window.setMode( WINDOW_WIDTH, WINDOW_HEIGHT, {
         fullscreen = false,
@@ -31,10 +34,10 @@ function love.load()
 
     -- Init Players (Player dimension 30x150)
     -- Player coordinates refer to the topmost left part of player
-    phineas = Player(10, 30, 0, "Phineas") -- leave 30px so as not to be on the extreme edge
-    ferb = Player(WINDOW_WIDTH-40, WINDOW_HEIGHT - 180, 0, "Ferb") -- (180 cause 150 + 30 cause initial state is not at the edge)
+    phineas = Player(10, 30, 0, "Phineas", phineas_img) -- leave 30px so as not to be on the extreme edge
+    ferb = Player(WINDOW_WIDTH-110, WINDOW_HEIGHT - 180, 0, "Ferb", ferb_img) -- (180 cause 150 + 30 cause initial state is not at the edge)
     -- Init Ball
-    ball = Ball(WINDOW_WIDTH/2, WINDOW_HEIGHT/2, BALL_SIDE)
+    ball = Ball(perry_img, WINDOW_WIDTH/2 - BALL_SIDE/2, WINDOW_HEIGHT/2 - BALL_SIDE/2, BALL_SIDE)
     -- Game State
     game_state = "STOP"
 end
@@ -43,11 +46,6 @@ function love.draw()
     -- Draw backgrounds
     love.graphics.draw(bg_image)
     love.graphics.setFont(bg_font)
-
-    -- Render Objects
-    phineas:render() 
-    ferb:render()
-    ball:render()
 
     love.graphics.setColor(0.4156,0.5215,0.1411, 0.75)
 
@@ -69,6 +67,12 @@ function love.draw()
     showFPS()
 
     love.graphics.setColor(1, 1,1, 1)
+
+    -- Render Objects
+    phineas:render() 
+    ferb:render()
+    ball:render()
+
     
 
     
