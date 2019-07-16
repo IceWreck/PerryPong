@@ -2,6 +2,7 @@
 Class = require 'class'
 require 'Ball'
 require 'Player'
+require 'helpers'
 
 -- Constant Variables
 WINDOW_WIDTH = 1280
@@ -30,8 +31,8 @@ function love.load()
 
     -- Init Players (Player dimension 30x150)
     -- Player coordinates refer to the topmost left part of player
-    phineas = Player(10, 30, 0) -- leave 30px so as not to be on the extreme edge
-    ferb = Player(WINDOW_WIDTH-40, WINDOW_HEIGHT - 180, 0) -- (180 cause 150 + 30 cause initial state is not at the edge)
+    phineas = Player(10, 30, 0, "Phineas") -- leave 30px so as not to be on the extreme edge
+    ferb = Player(WINDOW_WIDTH-40, WINDOW_HEIGHT - 180, 0, "Ferb") -- (180 cause 150 + 30 cause initial state is not at the edge)
     -- Init Ball
     ball = Ball(WINDOW_WIDTH/2, WINDOW_HEIGHT/2, BALL_SIDE)
     -- Game State
@@ -76,6 +77,7 @@ end
 
 function love.update(dt)
     -- Ball 
+
     -- Collision with players
     if ball:isCollision(phineas) or ball:isCollision(ferb) then
         -- rebound with extra speed
@@ -115,6 +117,24 @@ function love.update(dt)
     if game_state == 'PLAY' then
         ball:update(dt)
     end
+
+    -- Scoring
+
+    if ball.x < 0 then
+        ferb.score = ferb.score + 1
+        game_state = 'STOP'
+        ball:reset()
+    end
+    if ball.x > WINDOW_WIDTH then
+        phineas.score = phineas.score + 1
+        game_state = 'STOP'
+        ball:reset()
+    end
+
+    wonGame(phineas)
+    wonGame(ferb)
+
+
 end
 
 function love.keypressed(key)
@@ -132,7 +152,3 @@ function love.keypressed(key)
     end
 end
 
-function showFPS()
-    love.graphics.setFont(fps_font)
-    love.graphics.print('FPS: ' .. tostring(love.timer.getFPS()), 50,50)
-end

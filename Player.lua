@@ -1,10 +1,11 @@
 Player = Class{}
 
-function Player:init(x, y, score)
+function Player:init(x, y, score, name)
     self.x = x
     self.y = y -- of topmost point
     self.score = score
     self.dy = 0
+    self.name = name
 end
 
 function Player:update(dt)
