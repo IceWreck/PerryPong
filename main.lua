@@ -11,7 +11,7 @@ GAME_NAME = "Perry Pong"
 FSIZE_XL = 200 -- for title
 FSIZE_SCORE = 100 -- for scorekeeping
 PLAYER_SPEED = 600
-BALL_SIDE = 100
+BALL_SIDE = 100  -- width of square image for ball
 
 function love.load()
     bg_font = love.graphics.newFont('fonts/ferbtastic.ttf', FSIZE_XL)
@@ -21,6 +21,11 @@ function love.load()
     perry_img = love.graphics.newImage("img/perry.png")
     phineas_img = love.graphics.newImage("img/phineas.png")
     ferb_img = love.graphics.newImage("img/ferb.png")
+    sounds = {
+        ['perry_grr'] = love.audio.newSource('sounds/perry-grr.mp3', 'static'),
+        ['perry_theme'] = love.audio.newSource('sounds/perry-dooby-dooby-do.mp3', 'static'),
+        ['theme']= love.audio.newSource('sounds/theme.mp3', 'stream')        
+    }
     
     love.window.setMode( WINDOW_WIDTH, WINDOW_HEIGHT, {
         fullscreen = false,
@@ -38,6 +43,9 @@ function love.load()
     ferb = Player(WINDOW_WIDTH-110, WINDOW_HEIGHT - 180, 0, "Ferb", ferb_img) -- (180 cause 150 + 30 cause initial state is not at the edge)
     -- Init Ball
     ball = Ball(perry_img, WINDOW_WIDTH/2 - BALL_SIDE/2, WINDOW_HEIGHT/2 - BALL_SIDE/2, BALL_SIDE)
+    -- Play Music
+    sounds['theme']:setLooping(true)
+    sounds['theme']:play()
     -- Game State
     game_state = "STOP"
 end
@@ -84,6 +92,8 @@ function love.update(dt)
 
     -- Collision with players
     if ball:isCollision(phineas) or ball:isCollision(ferb) then
+
+        sounds['perry_grr']:play()
         -- rebound with extra speed
         ball.dx = -ball.dx * 1.2
         -- change its angle
@@ -148,6 +158,7 @@ function love.keypressed(key)
     -- reset state on enter
     elseif key == 'enter' or key == 'return' then
         if game_state == 'STOP' then
+            sounds['perry_theme']:play()
             game_state = 'PLAY'
         else
             game_state = 'STOP'
