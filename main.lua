@@ -24,7 +24,10 @@ function love.load()
     sounds = {
         ['perry_grr'] = love.audio.newSource('sounds/perry-grr.mp3', 'static'),
         ['perry_theme'] = love.audio.newSource('sounds/perry-dooby-dooby-do.mp3', 'static'),
-        ['theme']= love.audio.newSource('sounds/theme.mp3', 'stream')        
+        ['theme']= love.audio.newSource('sounds/theme.mp3', 'stream'),
+        ['watchadoin']= love.audio.newSource('sounds/watchadoin.mp3', 'static'),
+        ['hit']= love.audio.newSource('sounds/hit.wav', 'static'),
+        ['goal']= love.audio.newSource('sounds/goal.wav', 'static')        
     }
     
     love.window.setMode( WINDOW_WIDTH, WINDOW_HEIGHT, {
@@ -95,21 +98,23 @@ function love.update(dt)
 
         sounds['perry_grr']:play()
         -- rebound with extra speed
-        ball.dx = -ball.dx * 1.2
+        ball.dx = -ball.dx * 1.08
         -- change its angle
         if ball.dy < 0 then
-            ball.dy = -math.random(50, 150)
+            ball.dy = -math.random(50, 350)
         else
-            ball.dy = math.random(50, 150)
+            ball.dy = math.random(50, 350)
         end
     end
 
     -- Ensure it doesn't go offscreen
     if ball.y <= 0 then
+        sounds['hit']:play()  -- watchadoing was too annoying
         ball.y = 0
         ball.dy = -ball.dy
     end
     if ball.y >= WINDOW_HEIGHT - BALL_SIDE then
+        sounds['hit']:play()
         ball.y = WINDOW_HEIGHT - BALL_SIDE
         ball.dy = -ball.dy
     end
@@ -135,11 +140,13 @@ function love.update(dt)
     -- Scoring
 
     if ball.x < 0 then
+        sounds['goal']:play()
         ferb.score = ferb.score + 1
         game_state = 'STOP'
         ball:reset()
     end
     if ball.x > WINDOW_WIDTH then
+        sounds['goal']:play()
         phineas.score = phineas.score + 1
         game_state = 'STOP'
         ball:reset()

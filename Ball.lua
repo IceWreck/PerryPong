@@ -5,7 +5,7 @@ function Ball:init(image, x, y, side)
     self.y = y
     self.image = image
     self.side = side
-    self.dy = math.random(-50, 50) * 4 -- vertical; for turns
+    self.dy = math.random(-50, 50) * 8 -- vertical; for turns
     self.dx = randomSpeed() -- special function because we don't want very slow speed
 end
 
@@ -45,8 +45,8 @@ end
 
 function randomSpeed()
     if math.random(1,2) == 1 then
-        return math.random(60, 80) * 8
+        return math.random(60, 70) * 8
     else 
-        return math.random(60, 80) * -8
+        return math.random(60, 70) * -8
     end
 end
