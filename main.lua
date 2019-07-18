@@ -21,6 +21,7 @@ function love.load()
     perry_img = love.graphics.newImage("img/perry.png")
     phineas_img = love.graphics.newImage("img/phineas.png")
     ferb_img = love.graphics.newImage("img/ferb.png")
+    game_icon = love.image.newImageData("img/perry.png")
     sounds = {
         ['perry_grr'] = love.audio.newSource('sounds/perry-grr.mp3', 'static'),
         ['perry_theme'] = love.audio.newSource('sounds/perry-dooby-dooby-do.mp3', 'static'),
@@ -37,7 +38,7 @@ function love.load()
     } )
 
     love.window.setTitle('Perry Pong')
-
+    love.window.setIcon(game_icon)
     math.randomseed(os.time())
 
     -- Init Players (Player dimension 30x150)
