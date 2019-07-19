@@ -27,6 +27,7 @@ function Ball:update(dt)
 end
 
 function Ball:isCollision(player)
+    -- Area of effect is only 30px wide despite the characters being fatter but it doesn't matter beacuse of the game mechanics
     if self.x > player.x + 30 or self.x + self.side < player.x then
         return false 
     end

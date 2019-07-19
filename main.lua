@@ -8,10 +8,16 @@ require 'helpers'
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
 GAME_NAME = "Perry Pong"
-FSIZE_XL = 200 -- for title
+FSIZE_XL = 200 -- font size for title
 FSIZE_SCORE = 100 -- for scorekeeping
 PLAYER_SPEED = 600
-BALL_SIDE = 100  -- width of square image for ball
+SPEED_INCREASE = 1.15 -- speed increase for ball after every collision
+BALL_SIDE = 100  -- width of square image for ball, the actual img is part transparent to make it look circular
+FERB_OFFSET_LIMIT = 180 -- Max value of offset
+
+-- Variables that need to be accessed/changed in multiple functions
+ferb_offset = 100 -- default value untill it changes on first collision/score
+
 
 function love.load()
     bg_font = love.graphics.newFont('fonts/ferbtastic.ttf', FSIZE_XL)
@@ -50,6 +56,7 @@ function love.load()
     -- Play Music
     sounds['theme']:setLooping(true)
     sounds['theme']:play()
+
     -- Game State
     game_state = "STOP"
 end
@@ -85,10 +92,6 @@ function love.draw()
     ferb:render()
     ball:render()
 
-    
-
-    
-
 end
 
 function love.update(dt)
@@ -97,9 +100,12 @@ function love.update(dt)
     -- Collision with players
     if ball:isCollision(phineas) or ball:isCollision(ferb) then
 
+        -- we change the ferb_offset value after every collision.
+        ferb_offset = math.random(0, FERB_OFFSET_LIMIT)
+
         sounds['perry_grr']:play()
         -- rebound with extra speed
-        ball.dx = -ball.dx * 1.08
+        ball.dx = -ball.dx * SPEED_INCREASE
         -- change its angle
         if ball.dy < 0 then
             ball.dy = -math.random(50, 350)
@@ -127,13 +133,16 @@ function love.update(dt)
         phineas:update(dt)
     end
 
-    -- Ferb
+    -- Ferb for multiplayer
+    --[[
     if love.keyboard.isDown('up') then
         ferb:update(-dt)
     elseif love.keyboard.isDown('down') then
         ferb:update(dt)
     end
-
+    ]]
+    automatedFerb(dt, ferb_offset)
+    
     if game_state == 'PLAY' then
         ball:update(dt)
     end
@@ -148,6 +157,8 @@ function love.update(dt)
     end
     if ball.x > WINDOW_WIDTH then
         sounds['goal']:play()
+        -- we change the ferb_offset value after every collision.
+        ferb_offset = math.random(0, FERB_OFFSET_LIMIT)
         phineas.score = phineas.score + 1
         game_state = 'STOP'
         ball:reset()
