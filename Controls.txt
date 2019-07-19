@@ -7,8 +7,9 @@ ______                     ______
                      __/ |                   __/ |
                     |___/                   |___/ 
 
-* UP/DOWN to control Ferb.
-* W/S to control Phineas.
+Play as Phineas and try to defeat Ferb at PerryPong. 
+
+* UP/DOWN to control Phineas.
 * Enter to Play and Pause.
 
 -IceWreck

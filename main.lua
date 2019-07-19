@@ -127,17 +127,17 @@ function love.update(dt)
     end
 
     -- Phineas
-    if love.keyboard.isDown('w') then
+    if love.keyboard.isDown('up') then
         phineas:update(-dt)
-    elseif love.keyboard.isDown('s') then
+    elseif love.keyboard.isDown('down') then
         phineas:update(dt)
     end
 
     -- Ferb for multiplayer
     --[[
-    if love.keyboard.isDown('up') then
+    if love.keyboard.isDown('w') then
         ferb:update(-dt)
-    elseif love.keyboard.isDown('down') then
+    elseif love.keyboard.isDown('s') then
         ferb:update(dt)
     end
     ]]
