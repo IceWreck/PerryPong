@@ -17,8 +17,8 @@ https://icewreck.itch.io/perrypong
 ## Install Instructions:
 
 * Windows: Extract Zip and run the exe file.
-* macOS: Install the love2d library and run perry-pong-v1.love
-* Linux: Install the love2d library for your distribution from your package manager (called love in Fedora) , or use the love2d appimage. Then run perry-pong-v1.love
+* macOS: Install the love2d library and run perry-pong-v1.love -https://love2d.org/
+* Linux: Install the love2d library for your distribution from your package manager (called love in Fedora) , or use the love2d appimage. Then run perry-pong-v1.love - https://love2d.org/
 
 ## Credits:
 * Disney's Phineas and Ferb television show for character images and sounds
